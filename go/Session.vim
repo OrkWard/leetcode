@@ -20,9 +20,10 @@ inoremap <silent> <expr> <C-N> coc#pum#visible() ? coc#pum#next(1) : "\"
 imap <C-G>S <Plug>ISurround
 imap <C-G>s <Plug>Isurround
 imap <C-S> <Plug>Isurround
-inoremap <silent> <SNR>20_AutoPairsReturn =AutoPairsReturn()
+inoremap <silent> <SNR>19_AutoPairsReturn =AutoPairsReturn()
 inoremap <silent> <C-C> :call coc#pum#cancel()
 inoremap <silent> <expr> <C-Space> coc#refresh()
+map! <D-v> *
 nnoremap  :NERDTreeFind
 nnoremap  :NERDTreeToggle
 nnoremap  n :NERDTreeFocus
@@ -158,6 +159,12 @@ xnoremap <silent> <Plug>Sneak_F :call sneak#wrap(visualmode(), 1, 1, 1, 0)
 xnoremap <silent> <Plug>Sneak_f :call sneak#wrap(visualmode(), 1, 0, 1, 0)
 nnoremap <silent> <Plug>Sneak_F :call sneak#wrap('', 1, 1, 1, 0)
 nnoremap <silent> <Plug>Sneak_f :call sneak#wrap('', 1, 0, 1, 0)
+onoremap <silent> <Plug>Sneak_, :call sneak#rpt(v:operator, 1)
+onoremap <silent> <Plug>Sneak_; :call sneak#rpt(v:operator, 0)
+xnoremap <silent> <Plug>Sneak_, :call sneak#rpt(visualmode(), 1)
+xnoremap <silent> <Plug>Sneak_; :call sneak#rpt(visualmode(), 0)
+nnoremap <silent> <Plug>Sneak_, :call sneak#rpt('', 1)
+nnoremap <silent> <Plug>Sneak_; :call sneak#rpt('', 0)
 onoremap <silent> <Plug>SneakRepeat :call sneak#wrap(v:operator, sneak#util#getc(), sneak#util#getc(), sneak#util#getc(), sneak#util#getc())
 onoremap <silent> <Plug>Sneak_S :call sneak#wrap(v:operator, 2, 1, 2, 1)
 onoremap <silent> <Plug>Sneak_s :call sneak#wrap(v:operator, 2, 0, 2, 1)
@@ -167,6 +174,11 @@ nnoremap <silent> <Plug>Sneak_S :call sneak#wrap('', 2, 1, 2, 1)
 nnoremap <silent> <Plug>Sneak_s :call sneak#wrap('', 2, 0, 2, 1)
 nnoremap <C-F> :NERDTreeFind
 nnoremap <C-T> :NERDTreeToggle
+vmap <BS> "-d
+vmap <D-x> "*d
+vmap <D-c> "*y
+vmap <D-v> "-d"*P
+nmap <D-v> "*P
 inoremap <silent>  :call coc#pum#cancel()
 inoremap <silent> <expr>  coc#pum#visible() ? coc#pum#cancel() : "\"
 imap S <Plug>ISurround
@@ -179,22 +191,23 @@ inoremap <silent> <expr>  coc#pum#visible() ? coc#pum#confirm() : "\"
 let &cpo=s:cpo_save
 unlet s:cpo_save
 set autoindent
-set backspace=indent,eol,start
+set backspace=2
 set expandtab
 set fileencodings=ucs-bom,utf-8,default,latin1
-set helplang=en
+set helplang=cn
 set hidden
 set laststatus=2
 set listchars=tab:>-,space:·,extends:>,precedes:<
-set nomodeline
-set printoptions=paper:a4
-set ruler
-set runtimepath=~/.vim,~/.vim/plugged/vim-wakatime,~/.vim/plugged/vim-sneak,~/.vim/plugged/auto-pairs,~/.vim/plugged/vim-bufferline,~/.vim/plugged/vim-surround,~/.vim/plugged/vim-repeat,~/.vim/plugged/coc.nvim,~/.vim/plugged/vim-airline,~/.vim/plugged/vim-airline-themes,~/.vim/plugged/papercolor-theme,~/.vim/plugged/nerdtree,~/.vim/plugged/vim-javascript,~/.vim/plugged/typescript-vim,~/.vim/plugged/vim-jsx-pretty,~/.vim/plugged/riscv.vim,~/.vim/plugged/vim-commentary,~/.vim/plugged/fzf,~/.vim/plugged/fzf.vim,/var/lib/vim/addons,/etc/vim,/usr/share/vim/vimfiles,/usr/share/vim/vim90,/usr/share/vim/vimfiles/after,/etc/vim/after,/var/lib/vim/addons/after,~/.vim/plugged/vim-javascript/after,~/.vim/plugged/vim-jsx-pretty/after,~/.vim/after
+set modelines=0
+set runtimepath=~/.vim,~/.vim/plugged/vim-wakatime,~/.vim/plugged/vim-sneak,~/.vim/plugged/auto-pairs,~/.vim/plugged/vim-surround,~/.vim/plugged/vim-repeat,~/.vim/plugged/coc.nvim,~/.vim/plugged/vim-airline,~/.vim/plugged/vim-airline-themes,~/.vim/plugged/papercolor-theme,~/.vim/plugged/nerdtree,~/.vim/plugged/vim-javascript,~/.vim/plugged/typescript-vim,~/.vim/plugged/vim-jsx-pretty,~/.vim/plugged/riscv.vim,~/.vim/plugged/vim-commentary,~/.vim/plugged/fzf,~/.vim/plugged/fzf.vim,/usr/share/vim/vimfiles,/usr/share/vim/vim90,/usr/share/vim/vimfiles/after,~/.vim/plugged/vim-javascript/after,~/.vim/plugged/vim-jsx-pretty/after,~/.vim/after
 set shiftwidth=2
+set showtabline=2
 set softtabstop=2
 set splitbelow
-set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+set splitright
+set tabline=%!airline#extensions#tabline#get()
 set tabstop=2
+set window=0
 let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-1 siso=-1
 let v:this_session=expand("<sfile>:p")
 silent only
@@ -208,9 +221,9 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +13 0041.first-missing-positive/solution.go
-badd +1 0041.first-missing-positive/testcases.txt
-badd +5 0041.first-missing-positive/question.md
+badd +21 0041.first-missing-positive/solution.go
+badd +0 0041.first-missing-positive/testcases.txt
+badd +0 0041.first-missing-positive/question.md
 argglobal
 %argdel
 $argadd 0041.first-missing-positive/solution.go
@@ -233,11 +246,9 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 80 + 80) / 160)
-exe 'vert 2resize ' . ((&columns * 79 + 80) / 160)
+exe 'vert 1resize ' . ((&columns * 119 + 120) / 240)
+exe 'vert 2resize ' . ((&columns * 120 + 120) / 240)
 argglobal
-3argu
-if bufexists(fnamemodify("0041.first-missing-positive/solution.go", ":p")) | buffer 0041.first-missing-positive/solution.go | else | edit 0041.first-missing-positive/solution.go | endif
 balt 0041.first-missing-positive/question.md
 let s:cpo_save=&cpo
 set cpo&vim
@@ -259,7 +270,6 @@ inoremap <buffer> <silent> § =AutoPairsMoveCharacter('''')
 inoremap <buffer> <silent> ¢ =AutoPairsMoveCharacter('"')
 inoremap <buffer> <silent> © =AutoPairsMoveCharacter(')')
 inoremap <buffer> <silent> ¨ =AutoPairsMoveCharacter('(')
-inoremap <buffer> <silent> Û =AutoPairsMoveCharacter('[')
 inoremap <buffer> <silent> î :call AutoPairsJump()a
 inoremap <buffer> <silent> <expr> ð AutoPairsToggle()
 inoremap <buffer> <silent> â =AutoPairsBackInsert()
@@ -285,11 +295,8 @@ inoremap <buffer> <silent> { =AutoPairsInsert('{')
 inoremap <buffer> <silent> } =AutoPairsInsert('}')
 let &cpo=s:cpo_save
 unlet s:cpo_save
-setlocal keymap=
-setlocal noarabic
 setlocal autoindent
 setlocal backupcopy=
-setlocal balloonexpr=
 setlocal nobinary
 setlocal nobreakindent
 setlocal breakindentopt=
@@ -361,7 +368,7 @@ setlocal listchars=
 setlocal makeencoding=
 setlocal makeprg=
 setlocal matchpairs=(:),{:},[:]
-setlocal nomodeline
+setlocal modeline
 setlocal modifiable
 setlocal nrformats=bin,octal,hex
 setlocal nonumber
@@ -374,8 +381,6 @@ setlocal quoteescape=\\
 setlocal noreadonly
 set relativenumber
 setlocal relativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
 setlocal noscrollbind
 setlocal scrolloff=-1
 setlocal shiftwidth=2
@@ -410,8 +415,6 @@ setlocal thesaurus=
 setlocal thesaurusfunc=
 setlocal noundofile
 setlocal undolevels=-123456
-setlocal varsofttabstop=
-setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
 setlocal nowinfixheight
@@ -420,15 +423,15 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 18 - ((17 * winheight(0) + 21) / 42)
+let s:l = 22 - ((21 * winheight(0) + 25) / 51)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 18
+keepjumps 22
 normal! 0
 wincmd w
 argglobal
-3argu
+if bufexists(fnamemodify("0041.first-missing-positive/question.md", ":p")) | buffer 0041.first-missing-positive/question.md | else | edit 0041.first-missing-positive/question.md | endif
 balt 0041.first-missing-positive/solution.go
 let s:cpo_save=&cpo
 set cpo&vim
@@ -450,7 +453,6 @@ inoremap <buffer> <silent> § =AutoPairsMoveCharacter('''')
 inoremap <buffer> <silent> ¢ =AutoPairsMoveCharacter('"')
 inoremap <buffer> <silent> © =AutoPairsMoveCharacter(')')
 inoremap <buffer> <silent> ¨ =AutoPairsMoveCharacter('(')
-inoremap <buffer> <silent> Û =AutoPairsMoveCharacter('[')
 inoremap <buffer> <silent> î :call AutoPairsJump()a
 inoremap <buffer> <silent> <expr> ð AutoPairsToggle()
 inoremap <buffer> <silent> â =AutoPairsBackInsert()
@@ -480,11 +482,8 @@ inoremap <buffer> <silent> { =AutoPairsInsert('{')
 inoremap <buffer> <silent> } =AutoPairsInsert('}')
 let &cpo=s:cpo_save
 unlet s:cpo_save
-setlocal keymap=
-setlocal noarabic
 setlocal autoindent
 setlocal backupcopy=
-setlocal balloonexpr=
 setlocal nobinary
 setlocal nobreakindent
 setlocal breakindentopt=
@@ -556,7 +555,7 @@ setlocal listchars=
 setlocal makeencoding=
 setlocal makeprg=
 setlocal matchpairs=(:),{:},[:],<:>
-setlocal nomodeline
+setlocal modeline
 setlocal modifiable
 setlocal nrformats=bin,octal,hex
 setlocal nonumber
@@ -569,8 +568,6 @@ setlocal quoteescape=\\
 setlocal noreadonly
 set relativenumber
 setlocal relativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
 setlocal noscrollbind
 setlocal scrolloff=-1
 setlocal shiftwidth=4
@@ -605,8 +602,6 @@ setlocal thesaurus=
 setlocal thesaurusfunc=
 setlocal noundofile
 setlocal undolevels=-123456
-setlocal varsofttabstop=
-setlocal vartabstop=
 setlocal virtualedit=
 setlocal wincolor=
 setlocal nowinfixheight
@@ -615,16 +610,15 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 11 - ((10 * winheight(0) + 21) / 42)
+let s:l = 1 - ((0 * winheight(0) + 25) / 51)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 11
+keepjumps 1
 normal! 0
 wincmd w
-2wincmd w
-exe 'vert 1resize ' . ((&columns * 80 + 80) / 160)
-exe 'vert 2resize ' . ((&columns * 79 + 80) / 160)
+exe 'vert 1resize ' . ((&columns * 119 + 120) / 240)
+exe 'vert 2resize ' . ((&columns * 120 + 120) / 240)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
@@ -639,7 +633,6 @@ if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
