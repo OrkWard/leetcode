@@ -15,6 +15,8 @@ import (
 // @lc code=begin
 
 func trap(height []int) (ans int) {
+	leftHighest := []int{}
+	rightHighest := []int{}
 
 	return
 }
