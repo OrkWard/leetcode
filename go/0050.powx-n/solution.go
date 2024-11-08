@@ -1,5 +1,5 @@
-// Created by OrkWard at 2024/06/14 00:51
-// leetgo: dev
+// Created by OrkWard at 2024/08/06 14:40
+// leetgo: 1.4.7
 // https://leetcode.com/problems/powx-n/
 
 package main
@@ -13,26 +13,32 @@ import (
 )
 
 // @lc code=begin
+func abs(n int) int {
+	if n > 0 {
+		return n
+	}
+	return -n
+}
 
 func myPow(x float64, n int) (ans float64) {
-	if x == 0 {
-		return 0
-	} else if n > 0 {
-		ans = 1.0
-		for _ = range n {
-			ans *= x
-		}
-		return ans
-	} else {
-		ans = 1.0
-		for _ = range -n {
-			ans /= x
-			if (ans == 0.0) {
-				return 0.0
-			}
-		}
-		return ans
+	if n == 0 {
+		return 1
 	}
+
+	sign := n / abs(n)
+	n = abs(n)
+	ans = 1
+	for n > 0 {
+		mod := n % 2
+		if mod == 1 && sign > 0 {
+			ans *= x
+		} else if mod == 1 && sign < 0 {
+			ans /= x
+		}
+		x = x * x
+		n = n / 2
+	}
+	return ans
 }
 
 // @lc code=end
